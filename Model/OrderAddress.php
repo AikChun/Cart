@@ -24,9 +24,9 @@ class OrderAddress extends CartAppModel {
 		'first_name' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty')),
-		'last_name' => array(
-			'notEmpty' => array(
-				'rule' => 'notEmpty')),
+		// 'last_name' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => 'notEmpty')),
 		'street' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty')),

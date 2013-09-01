@@ -112,6 +112,7 @@ class Order extends CartAppModel {
  */
 	public function beforeSave($options = array()) {
 		if (!empty($this->data[$this->alias]['cart_snapshop']) && is_array($this->data[$this->alias]['cart_snapshop'])) {
+			$this->data[$this->alias]['cart_snapshop'] = array_filter($this->data[$this->alias]['cart_snapshop']);
 			$this->data[$this->alias]['cart_snapshop'] = serialize($this->data[$this->alias]['cart_snapshop']);
 		}
 
@@ -311,11 +312,11 @@ class Order extends CartAppModel {
 		}
 
 		if ($result) {
-			$result[$this->alias][$this->primaryKey] = $this->getLastInsertId();
+			$result[$this->alias][$this->primaryKey] = $orderId;
 			CakeEventManager::instance()->dispatch(new CakeEvent('Order.created', $this, array($result)));
 		}
+		$result = Hash::merge($result, unserialize($result[$this->alias]['cart_snapshop']));
 
-		$result = Set::merge($result, unserialize($result[$this->alias]['cart_snapshop']));
 		return $result;
 	}
 
