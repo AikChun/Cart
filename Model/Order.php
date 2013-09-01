@@ -281,10 +281,12 @@ class Order extends CartAppModel {
 		CakeEventManager::instance()->dispatch(new CakeEvent('Order.beforeCreateOrder', $this, array($order)));
 
 		$order = $this->validateOrder($order);
+		$this->log('allo!!');
+		$this->log($order);
 		if ($order === false) {
 			return false;
 		}
-
+$this->log('allo again!!');
 		$this->data = null;
 		$this->create();
 		$result = $this->save($order);
@@ -371,7 +373,7 @@ class Order extends CartAppModel {
 			$id = $this->id;
 		}
 		if (in_array($newPaymentStatus, $this->orderStatuses)) {
-			$fields     = array('Order.payment_status', $newPaymentStatus);
+			$fields     = array('Order.payment_status' => "'" . $newPaymentStatus . "'");
 			$conditions = array('Order.id' => $id);
 			$this->updateAll($fields, $conditions);
 		}
