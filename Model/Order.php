@@ -359,4 +359,23 @@ class Order extends CartAppModel {
 		return $this->find('count');
 	}
 
+/**
+ * Update the payment status
+ *
+ * @param string $id Order id
+ * @param string $newPaymentStatus the payment status
+ * @return boolean true if successful, false otherwise
+ */
+	public function updatePaymentStatus($id = null, $newPaymentStatus = 'pending') {
+		if ($id == null) {
+			$id = $this->id;
+		}
+		if (in_array($newPaymentStatus, $this->orderStatuses)) {
+			$fields     = array('Order.payment_status', $newPaymentStatus);
+			$conditions = array('Order.id' => $id);
+			$this->updateAll($fields, $conditions);
+		}
+		return false;
+	}
+
 }
