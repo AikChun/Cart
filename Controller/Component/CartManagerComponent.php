@@ -335,6 +335,11 @@ class CartManagerComponent extends Component {
 		} else {
 			$this->Session->setFlash(__d('cart', 'You now have %s %s in your cart', $item['quantity'], $item['name']));
 		}
+		if(is_string($afterAddItemRedirect) && strpos($afterAddItemRedirect, '{')!== false) {
+			$afterAddItemRedirect = str_replace('{referer}', $this->Controller->referer(), $afterAddItemRedirect);
+			$afterAddItemRedirect = str_replace('{id}', $item['foreign_key'], $afterAddItemRedirect);
+			$this->Controller->redirect($afterAddItemRedirect);
+		}
 		if (is_string($afterAddItemRedirect) || is_array($afterAddItemRedirect)) {
 			$this->Controller->redirect($afterAddItemRedirect);
 		} elseif ($afterAddItemRedirect === true) {
