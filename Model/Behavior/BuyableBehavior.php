@@ -144,6 +144,7 @@ class BuyableBehavior extends ModelBehavior {
 			'foreign_key' => $record[$Model->alias][$Model->primaryKey],
 			'name' => $record[$Model->alias][$nameField],
 			'price' => $record[$Model->alias][$priceField],
+			'short_name' => $record[$Model->alias]['short_name'],
 			'additional_data' => serialize($Model->additionalBuyData()));
 
 		return Set::merge($cartsItem['CartsItem'], $result);
