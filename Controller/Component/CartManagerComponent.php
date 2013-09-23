@@ -184,6 +184,13 @@ class CartManagerComponent extends Component {
 		if ($this->Controller->request->is('post')) {
 			$data = $this->postBuy();
 		}
+
+		/** custom code to join the 3 custom values into metadata **/
+		$data['CartsItem']['metadata'] = 'first line: '.$data['CartsItem']['first_line']."\n";
+		$data['CartsItem']['metadata'] .= 'second line: '.$data['CartsItem']['second_line']."\n";
+		$data['CartsItem']['metadata'] .= 'font: '.$data['CartsItem']['font'];
+		$this->Controller->log($data);
+
 		$type = $this->getType($data);
 		if (!$this->typeAllowed($type)) {
 			throw new InternalErrorException(__('Type %s is not allowed', $type));
