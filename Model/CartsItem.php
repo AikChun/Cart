@@ -84,6 +84,7 @@ class CartsItem extends CartAppModel {
 			'conditions' => array(
 				'cart_id' => $cartId,
 				'model' => $itemData['model'],
+				'metadata' => $itemData['metadata'],
 				'foreign_key' => $itemData['foreign_key'])));
 
 		if (empty($item)) {

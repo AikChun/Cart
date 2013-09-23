@@ -280,14 +280,14 @@ class CartManagerComponent extends Component {
 			return $this->addItem($data, $recalculate);
 		}
 
-		$contains = $this->contains($data['CartsItem']['foreign_key'], $data['CartsItem']['model']);
+		$contains = $this->contains($data['CartsItem']['foreign_key'], $data['CartsItem']['model'], $data['CartsItem']['metadata']);
 		if (!$contains && $type === 'increment') {
 			return $this->addItem($data, $recalculate);
 		} elseif (!$contains) {
 			return false;
 		}
 
-		$item = $this->getItem($data['CartsItem']['foreign_key'], $data['CartsItem']['model']);
+		$item = $this->getItem($data['CartsItem']['foreign_key'], $data['CartsItem']['model'], '', $data['CartsItem']['metadata']);
 		if ($type == 'increment') {
 			$data['CartsItem']['quantity'] += $item['quantity'];
 			return $this->addItem($data, $recalculate);
@@ -515,8 +515,8 @@ class CartManagerComponent extends Component {
  * @param string $model Model name
  * @return boolean
  */
-	public function contains($id, $model) {
-		return $this->getItemKey($id, $model) !== false;
+	public function contains($id, $model, $metadata) {
+		return $this->getItemKey($id, $model, $metadata) !== false;
 	}
 
 /**
@@ -526,8 +526,8 @@ class CartManagerComponent extends Component {
  * @param string $model Model name
  * @return mixed False or key of the array entry in the cart session
  */
-	public function getItemKey($id, $model) {
-		return $this->CartSession->getItemKey($id, $model);
+	public function getItemKey($id, $model, $metadata) {
+		return $this->CartSession->getItemKey($id, $model, $metadata);
 	}
 
 /**
@@ -537,8 +537,8 @@ class CartManagerComponent extends Component {
  * @return bool
  * @internal param $
  */
-	public function getItem($id, $model, $field = '') {
-		$key = $this->getItemKey($id, $model);
+	public function getItem($id, $model, $field = '', $metadata) {
+		$key = $this->getItemKey($id, $model, $metadata);
 		if ($key === false) {
 			return false;
 		}
