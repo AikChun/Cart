@@ -189,7 +189,7 @@ class CartManagerComponent extends Component {
 		$data['CartsItem']['metadata'] = 'first line: '.$data['CartsItem']['first_line']."\n";
 		$data['CartsItem']['metadata'] .= 'second line: '.$data['CartsItem']['second_line']."\n";
 		$data['CartsItem']['metadata'] .= 'font: '.$data['CartsItem']['font']."\n";
-		$data['CartsItem']['metadata'] .= 'image: '. $data['CartsItem']['image'];
+		$data['CartsItem']['metadata'] .= 'image: '.$data['CartsItem']['image'];
 		$this->Controller->log($data);
 
 		$type = $this->getType($data);
