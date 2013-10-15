@@ -189,8 +189,8 @@ class CartManagerComponent extends Component {
 		$data['CartsItem']['metadata'] = 'first line: '.$data['CartsItem']['first_line']."\n";
 		$data['CartsItem']['metadata'] .= 'second line: '.$data['CartsItem']['second_line']."\n";
 		$data['CartsItem']['metadata'] .= 'font: '.$data['CartsItem']['font']."\n";
-		$data['CartsItem']['metadata'] .= 'image: '.$data['CartsItem']['image'];
-		$this->Controller->log($data);
+		$data['CartsItem']['metadata'] .= 'image: '.$data['CartsItem']['label_type'];
+		$data['CartsItem']['hashed'] = Security::hash($data['CartsItem']['metadata'], 'sha1', true);
 
 		$type = $this->getType($data);
 		if (!$this->typeAllowed($type)) {
@@ -280,15 +280,15 @@ class CartManagerComponent extends Component {
 		if ($type == 'update') {
 			return $this->addItem($data, $recalculate);
 		}
-
-		$contains = $this->contains($data['CartsItem']['foreign_key'], $data['CartsItem']['model'], $data['CartsItem']['metadata']);
+		$contains = $this->contains($data['CartsItem']['foreign_key'], $data['CartsItem']['model'], $data['CartsItem']['hashed']);
+		$this->Controller->log($contains);
 		if (!$contains && $type === 'increment') {
 			return $this->addItem($data, $recalculate);
 		} elseif (!$contains) {
 			return false;
 		}
 
-		$item = $this->getItem($data['CartsItem']['foreign_key'], $data['CartsItem']['model'], '', $data['CartsItem']['metadata']);
+		$item = $this->getItem($data['CartsItem']['foreign_key'], $data['CartsItem']['model'], '', $data['CartsItem']['hashed']);
 		if ($type == 'increment') {
 			$data['CartsItem']['quantity'] += $item['quantity'];
 			return $this->addItem($data, $recalculate);
@@ -516,8 +516,8 @@ class CartManagerComponent extends Component {
  * @param string $model Model name
  * @return boolean
  */
-	public function contains($id, $model, $metadata) {
-		return $this->getItemKey($id, $model, $metadata) !== false;
+	public function contains($id, $model, $hashed) {
+		return $this->getItemKey($id, $model, $hashed) !== false;
 	}
 
 /**
@@ -527,8 +527,8 @@ class CartManagerComponent extends Component {
  * @param string $model Model name
  * @return mixed False or key of the array entry in the cart session
  */
-	public function getItemKey($id, $model, $metadata) {
-		return $this->CartSession->getItemKey($id, $model, $metadata);
+	public function getItemKey($id, $model, $hashed) {
+		return $this->CartSession->getItemKey($id, $model, $hashed);
 	}
 
 /**
@@ -538,8 +538,8 @@ class CartManagerComponent extends Component {
  * @return bool
  * @internal param $
  */
-	public function getItem($id, $model, $field = '', $metadata) {
-		$key = $this->getItemKey($id, $model, $metadata);
+	public function getItem($id, $model, $field = '', $hashed) {
+		$key = $this->getItemKey($id, $model, $hashed);
 		if ($key === false) {
 			return false;
 		}

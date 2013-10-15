@@ -78,7 +78,7 @@ class CartSessionComponent extends Component {
 			throw new InvalidArgumentException(__d('cart', 'foreign_key or model is missing from the item data!'));
 		}
 
-		$arrayKey = $this->_findItem($item['foreign_key'], $item['model'], $item['metadata']);
+		$arrayKey = $this->_findItem($item['foreign_key'], $item['model'], $item['hashed']);
 		if ($arrayKey === false) {
 			return false;
 		}
@@ -92,11 +92,11 @@ class CartSessionComponent extends Component {
  * @param string $model Model name
  * @return mixed False or key of the array entry in the cart session
  */
-	protected function _findItem($id, $model, $metadata) {
+	protected function _findItem($id, $model, $hashed) {
 		$cart = $this->read();
 		if (!empty($cart['CartsItem'])) {
 			foreach ($cart['CartsItem'] as $key => $item) {
-				if ($item['foreign_key'] == $id && $item['model'] == $model && $item['metadata'] == $metadata) {
+				if ($item['foreign_key'] == $id && $item['model'] == $model && $item['hashed'] == $hashed) {
 					return $key;
 				}
 			}
@@ -111,8 +111,8 @@ class CartSessionComponent extends Component {
  * @param string $model Model name
  * @return mixed False or key of the array entry in the cart session
  */
-	public function getItemKey($id, $model, $metadata) {
-		return $this->_findItem($id, $model, $metadata);
+	public function getItemKey($id, $model, $hashed) {
+		return $this->_findItem($id, $model, $hashed);
 	}
 
 /**
