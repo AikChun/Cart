@@ -193,6 +193,12 @@ class CartManagerComponent extends Component {
 		$data['CartsItem']['hashed'] = Security::hash($data['CartsItem']['metadata'], 'sha1', true);
 
 		$type = $this->getType($data);
+
+		if($data['CartsItem']['label_type'] == "") {
+			$this->Session->setFlash("Please select a label type!");
+			$this->Controller->redirect($this->Controller->referer());
+		}
+
 		if (!$this->typeAllowed($type)) {
 			throw new InternalErrorException(__('Type %s is not allowed', $type));
 		}
