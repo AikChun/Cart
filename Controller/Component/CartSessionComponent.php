@@ -96,8 +96,10 @@ class CartSessionComponent extends Component {
 		$cart = $this->read();
 		if (!empty($cart['CartsItem'])) {
 			foreach ($cart['CartsItem'] as $key => $item) {
-				if ($item['foreign_key'] == $id && $item['model'] == $model && $item['hashed'] == $hashed) {
-					return $key;
+				if (array_key_exists('hashed', $item)) {
+					if ($item['foreign_key'] == $id && $item['model'] == $model && $item['hashed'] == $hashed) {
+						return $key;
+					}	
 				}
 			}
 		}
