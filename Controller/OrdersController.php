@@ -93,13 +93,15 @@ class OrdersController extends CartAppController {
  */
 	public function admin_view($orderId = null) {
 		try {
-			$this->set('order', $this->Order->adminView($orderId));
+			$orderAdminView = $this->Order->adminView($orderId);
+			$this->set('order', $orderAdminView);
 			/*
+
 			$this->Paginator->settings['OrderItem'] = array(
 				'conditions' => array(
 					'OrderItem' => $orderId	));
 			*/
-			$this->set('orderItems', $this->Paginator->paginate($this->Order->OrderItem));
+			/* $this->set('orderItems', $this->Paginator->paginate($this->Order->OrderItem)); */
 		} catch (Exception $e) {
 			$this->Session->setFlash($e->getMessage());
 			$this->redirect(array('action' => 'index'));
