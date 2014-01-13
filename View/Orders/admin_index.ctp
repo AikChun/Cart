@@ -23,6 +23,8 @@
 				<th><?php echo $this->Paginator->sort('order_number', __('Order #')); ?></th>
 				<th><?php echo $this->Paginator->sort('invoice_number', __('Invoice #')); ?></th>
 				<th><?php echo $this->Paginator->sort('processor', __('Payment Method')); ?></th>
+				<th><?php echo $this->Paginator->sort('status', __('Status')); ?></th>
+				<th><?php echo $this->Paginator->sort('payment_status', __('Payment Status')); ?></th>
 				<th><?php echo $this->Paginator->sort('created', __('Created')); ?></th>
 			</tr>
 		</thead>
@@ -39,6 +41,8 @@
 					<td><?php echo $this->Number->currency($order['Order']['total'], $order['Order']['currency']); ?></td>
 					<td><?php echo $order['Order']['invoice_number']; ?></td>
 					<td><?php echo $order['Order']['processor']; ?></td>
+					<td><?php echo $order['Order']['status']; ?></td>
+					<td><?php echo $order['Order']['payment_status']; ?></td>
 					<td><?php echo $order['Order']['created']; ?></td>
 					<td>
 						<?php
@@ -53,3 +57,4 @@
 <?php else: ?>
 	<p><?php echo __d('cart', 'No orders'); ?></p>
 <?php endif; ?>
+
