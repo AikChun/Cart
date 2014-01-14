@@ -70,14 +70,14 @@ class Order extends CartAppModel {
  * @var array
  */
 	public $validate = array(
-		'total' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'This must be a number')),
-		'status' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'The order requires a status')),
+		// 'total' => array(
+		// 	'numeric' => array(
+		// 		'rule' => array('numeric'),
+		// 		'message' => 'This must be a number')),
+		// 'status' => array(
+		// 	'notEmpty' => array(
+		// 		'rule' => array('notEmpty'),
+		// 		'message' => 'The order requires a status')),
 		'currency' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -101,6 +101,8 @@ class Order extends CartAppModel {
 		array('name' => 'email', 'type' => 'like', 'field' => 'User.email'),
 		array('name' => 'invoice_number', 'type' => 'like'),
 		array('name' => 'total', 'type' => 'value'),
+		array('name' => 'status', 'type' => 'like'),
+		array('name' => 'payment_status', 'type' => 'like'),
 		array('name' => 'created', 'type' => 'like'),
 	);
 
@@ -378,4 +380,15 @@ class Order extends CartAppModel {
 		return false;
 	}
 
+	public function updateStatus($id = null, $newStatus = 'pending') {
+		if ($id == null) {
+			$id = $this->id;
+		}
+		if (in_array($newStatus, $this->orderStatuses)) {
+			$fields     = array('Order.status' => "'" . $newStatus . "'");
+			$conditions = array('Order.id' => $id);
+			$this->updateAll($fields, $conditions);
+		}
+		return false;
+	}
 }

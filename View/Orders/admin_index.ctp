@@ -10,6 +10,10 @@
 		'label' => __('Username')));
 	echo $this->Form->input('email', array(
 		'label' => __('Email')));
+	echo $this->Form->input('payment_status', array(
+		'label' => __('Payment Status')));
+	echo $this->Form->input('status', array(
+		'label' => __('Status')));
 	echo $this->Form->end(__d('cart', 'Search'));
 ?>
 

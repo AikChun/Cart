@@ -26,6 +26,8 @@ class OrdersController extends CartAppController {
 		array('field' => 'username', 'type' => 'value'),
 		array('field' => 'email', 'type' => 'value'),
 		array('field' => 'total', 'type' => 'value'),
+		array('field' => 'payment_status', 'type' => 'value'),
+		array('field' => 'status', 'type' => 'value'),
 		array('field' => 'created', 'type' => 'value'),
 	);
 
