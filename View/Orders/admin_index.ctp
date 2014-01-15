@@ -1,7 +1,9 @@
 <h2><?php echo __d('cart', 'Orders'); ?></h2>
 
 <?php
-	echo $this->Form->create();
+	echo $this->Form->create('Order', array(
+		'url' => array_merge(array('action' => 'find'), $this->params['pass'])
+	));
 	echo $this->Form->input('invoice_number', array(
 		'label' => __('Invoice Number')));
 	echo $this->Form->input('total', array(

@@ -97,7 +97,7 @@ class Order extends CartAppModel {
  * @var array
  */
 	public $filterArgs = array(
-		array('name' => 'username', 'type' => 'like', 'field' => 'User.username'),
+		array('name' => 'username', 'type' => 'like', 'field' => 'User.full_name'),
 		array('name' => 'email', 'type' => 'like', 'field' => 'User.email'),
 		array('name' => 'invoice_number', 'type' => 'like'),
 		array('name' => 'total', 'type' => 'value'),

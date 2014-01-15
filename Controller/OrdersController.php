@@ -39,6 +39,7 @@ class OrdersController extends CartAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('checkout');
+		$this->Security->csrfCheck=false;
 	}
 
 /**
@@ -72,20 +73,25 @@ class OrdersController extends CartAppController {
 	}
 
 	public function cancel($orderId) {
-
 	}
 
+	public function admin_find() {
+		$this->Prg->commonProcess();
+		$this->Paginator->settings['conditions'] = $this->Order->parseCriteria($this->Prg->parsedParams());
+		$this->set('orders', $this->Paginator->paginate());
+		$this->render('admin_index');
+	}
 /**
  * Lists all orders for an admin
  *
  * @return void
  */
 	public function admin_index() {
-		$this->paginate = array(
-			'contain' => array(
-				'User'),
-			'order' => 'Order.created DESC');
-		$this->set('orders', $this->paginate());
+			$this->paginate = array(
+				'contain' => array(
+					'User'),
+				'order' => 'Order.created DESC');
+			$this->set('orders', $this->paginate());
 	}
 
 /**
