@@ -25,8 +25,6 @@
 		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('total', __('Total')); ?></th>
-				<th><?php echo $this->Paginator->sort('currency', __('Currency')); ?></th>
-				<th><?php echo $this->Paginator->sort('order_number', __('Order #')); ?></th>
 				<th><?php echo $this->Paginator->sort('invoice_number', __('Invoice #')); ?></th>
 				<th><?php echo $this->Paginator->sort('processor', __('Payment Method')); ?></th>
 				<th><?php echo $this->Paginator->sort('status', __('Status')); ?></th>
@@ -39,12 +37,11 @@
 				<tr>
 					<td>
 						<?php
-							echo $this->Html->link($order['Order']['total'], array(
+							$total = $this->Number->currency($order['Order']['total'], $order['Order']['currency']);
+							echo $this->Html->link($total, array(
 								'action' => 'view', $order['Order']['id']));
 						?>
 					</td>
-					<td><?php echo $order['Order']['currency']; ?></td>
-					<td><?php echo $this->Number->currency($order['Order']['total'], $order['Order']['currency']); ?></td>
 					<td><?php echo $order['Order']['invoice_number']; ?></td>
 					<td><?php echo $order['Order']['processor']; ?></td>
 					<td><?php echo $order['Order']['status']; ?></td>
