@@ -103,13 +103,6 @@ class OrdersController extends CartAppController {
 		try {
 			$orderAdminView = $this->Order->adminView($orderId);
 			$this->set('order', $orderAdminView);
-			/*
-
-			$this->Paginator->settings['OrderItem'] = array(
-				'conditions' => array(
-					'OrderItem' => $orderId	));
-			*/
-			/* $this->set('orderItems', $this->Paginator->paginate($this->Order->OrderItem)); */
 		} catch (Exception $e) {
 			$this->Session->setFlash($e->getMessage());
 			$this->redirect(array('action' => 'index'));
@@ -117,7 +110,7 @@ class OrdersController extends CartAppController {
 	}
 
 /**
- * 
+ *
  */
 	public function admin_refund($orderId) {
 		$order = $this->Order->find('first', array(

@@ -1,7 +1,6 @@
 <h2><?php echo __('Your order #%s', $order['Order']['id']); ?></h2>
 
 <dl>
-	
 	<dt><?php echo __('Customer Name'); ?></dt>
 	<dd><?php echo h($order['User']['full_name']); ?></dd>
 	<dt><?php echo __('Email'); ?></dt>
@@ -17,9 +16,27 @@
 	<dt><?php echo __('Payment Status'); ?></dt>
 	<dd><?php echo h($order['Order']['payment_status']); ?></dd>
 	<dt><?php echo __('Status'); ?></dt>
-	<dd><?php if($order['Order']['status'] == '') 
+	<dd><?php if($order['Order']['status'] == '')
 				echo "NULL";
 			echo h($order['Order']['status']); ?></dd>
+</dl>
+
+<h2><?php echo __('Shipping address');
+$shipping = $order['Order']['cart_snapshop']['ShippingAddress'];
+?></h2>
+<dl>
+	<dt><?php echo __('First Name'); ?></dt>
+	<dd><?php echo h($shipping['first_name']); ?></dd>
+	<dt><?php echo __('Last Name'); ?></dt>
+	<dd><?php echo h($shipping['last_name']); ?></dd>
+	<dt><?php echo __('Address 1'); ?></dt>
+	<dd><?php echo h($shipping['street']); ?></dd>
+	<dt><?php echo __('Address 2'); ?></dt>
+	<dd><?php echo h($shipping['street2']); ?></dd>
+	<dt><?php echo __('Zip'); ?></dt>
+	<dd><?php echo h($shipping['zip']); ?></dd>
+	<dt><?php echo __('Country'); ?></dt>
+	<dd><?php echo h($shipping['country']); ?></dd>
 </dl>
 
 <?php
