@@ -91,6 +91,7 @@ class OrdersController extends CartAppController {
 				'contain' => array(
 					'User'),
 				'order' => 'Order.created DESC');
+			$this->log($this->paginate());
 			$this->set('orders', $this->paginate());
 	}
 
