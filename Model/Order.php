@@ -27,7 +27,8 @@ class Order extends CartAppModel {
 		'failed',
 		'completed',
 		'refunded',
-		'partial-refunded');
+		'partial-refunded',
+		'remove');
 
 /**
  * belongsTo associations
@@ -283,7 +284,7 @@ class Order extends CartAppModel {
 		CakeEventManager::instance()->dispatch(new CakeEvent('Order.beforeCreateOrder', $this, array($order)));
 
 		$order = $this->validateOrder($order);
-	
+
 		if ($order === false) {
 			return false;
 		}
@@ -308,7 +309,7 @@ class Order extends CartAppModel {
 			}
 			$this->BillingAddress->save($order);
 			if(!isset($order['ShippingAddress']['id'])) {
-				$this->ShippingAddress->create();	
+				$this->ShippingAddress->create();
 			}
 			$this->ShippingAddress->save($order);
 		}
@@ -384,10 +385,12 @@ class Order extends CartAppModel {
 		if ($id == null) {
 			$id = $this->id;
 		}
+
 		if (in_array($newStatus, $this->orderStatuses)) {
 			$fields     = array('Order.status' => "'" . $newStatus . "'");
 			$conditions = array('Order.id' => $id);
-			$this->updateAll($fields, $conditions);
+			$result = $this->updateAll($fields, $conditions);
+			return $result;
 		}
 		return false;
 	}

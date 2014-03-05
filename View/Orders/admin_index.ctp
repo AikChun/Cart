@@ -68,7 +68,7 @@
 					<td>
 						<?php
 							echo $this->Html->link(__d('cart', 'view'), array('action' => 'view', $order['Order']['id'])) . ' | ';
-							echo $this->Html->link(__d('cart', 'refund'), array('action' => 'refund', $order['Order']['id']));
+							echo $this->Form->postLink(__d('cart', 'remove'), array('action' => 'remove', $order['Order']['id']), array(), 'Are you sure you want to remove this Order #'.$order['Order']['invoice_number']);
 						?>
 					</td>
 				</tr>

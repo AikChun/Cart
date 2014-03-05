@@ -52,6 +52,7 @@ class OrdersController extends CartAppController {
 		$this->paginate = array(
 			'contain' => array(),
 			'conditions' => array(
+				'Order.status !=' => 'remove',
 				'Order.user_id' => $userId),
 			'order' => 'Order.created DESC');
 		$this->set('orders', $this->paginate());
@@ -78,6 +79,7 @@ class OrdersController extends CartAppController {
 	public function admin_find() {
 		$this->Prg->commonProcess();
 		$this->Paginator->settings['conditions'] = $this->Order->parseCriteria($this->Prg->parsedParams());
+		$this->Paginator->settings['conditions']['Order.status !='] = 'remove';
 		$this->set('orders', $this->Paginator->paginate());
 		$this->render('admin_index');
 	}
@@ -88,10 +90,11 @@ class OrdersController extends CartAppController {
  */
 	public function admin_index() {
 			$this->paginate = array(
+				'conditions' => array('Order.status !=' => 'remove'),
 				'contain' => array(
 					'User'),
 				'order' => 'Order.created DESC');
-			$this->log($this->paginate());
+			// $this->log($this->paginate());
 			$this->set('orders', $this->paginate());
 	}
 
@@ -122,6 +125,26 @@ class OrdersController extends CartAppController {
 			$this->Order->refund($orderId);
 		}
 
+	}
+
+/**
+ * mark as remove
+ */
+	public function admin_remove($orderId) {
+		if (!$this->Order->exists($orderId)) {
+			throw new NotFoundException('No such order');
+		}
+		$referer = $this->referer();
+		$result = false;
+		if ($this->request->is('post')) {
+			$result = $this->Order->updateStatus($orderId, 'remove');
+		}
+		if ($result) {
+			$this->Session->setFlash('Order successfully removed');
+		} else {
+			$this->Session->setFlash('Unable to remove order');
+		}
+		$this->redirect($referer);
 	}
 
 }
